@@ -1,9 +1,8 @@
 import { abis as itcTokenServiceAbis } from '../abis/interchainTokenService'
 import { abis as itcTokenFactoryAbis } from '../abis/interchainTokenFactory'
 import { ethers } from 'hardhat'
-import { AxelarQueryAPI, Environment, EvmChain, GasToken } from '@axelar-network/axelarjs-sdk'
+import { AxelarQueryAPI, Environment, EvmChain } from '@axelar-network/axelarjs-sdk'
 import { ContractInterface } from 'ethers'
-import { parseEther } from 'ethers/lib/utils'
 
 const interchainTokenServiceContractABI = itcTokenServiceAbis
 const interchainTokenFactoryContractABI = itcTokenFactoryAbis
@@ -19,7 +18,7 @@ async function getSigner() {
   const [signer] = await ethers.getSigners()
   return signer
 }
-ethers.utils.Interface
+
 async function getContractInstance(
   contractAddress: string,
   contractABI: ContractInterface,
@@ -116,4 +115,16 @@ export async function transferByTokenService(
   await sendTx.wait()
 
   console.log(`transaction hash: ${sendTx.hash}`)
+}
+
+export async function getTokenId() {
+  const signer = await getSigner()
+  console.log('signer', signer.address)
+  const interchainTokenFactoryContract = await getContractInstance(
+    interchainTokenFactoryContractAddress,
+    interchainTokenFactoryContractABI,
+    signer
+  )
+  const rizTokenId = await interchainTokenFactoryContract.canonicalInterchainTokenId(rizAddress)
+  console.log({ rizTokenId })
 }

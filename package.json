@@ -10,7 +10,8 @@
     "verify": "npx hardhat verify",
     "register": "npx hardhat run scripts/001_registerToken.ts",
     "deployRemoteToken": "npx hardhat run scripts/002_deployRemoteToken.ts",
-    "transferToken": "npx hardhat run scripts/003_transferToken.ts"
+    "transferToken": "npx hardhat run scripts/003_transferToken.ts",
+    "getTokenId": "npx hardhat run scripts/004_getTokenId.ts"
   },
   "author": "",
   "license": "ISC",
